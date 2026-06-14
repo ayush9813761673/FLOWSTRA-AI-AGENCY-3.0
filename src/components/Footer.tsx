@@ -6,6 +6,7 @@ import {
   Facebook,
   Instagram,
   Twitter,
+  Linkedin,
 } from "lucide-react";
 import { FooterBackgroundGradient, TextHoverEffect } from "./ui/hover-footer";
 
@@ -64,8 +65,23 @@ export function Footer() {
   ];
 
   // Social media icons (hidden for now)
-  const socialLinks: { icon: React.ReactNode; label: string; href: string }[] =
-    [];
+  const socialLinks: { icon: React.ReactNode; label: string; href: string; target?: string; rel?: string }[] =
+    [
+      {
+        icon: <Linkedin size={20} />,
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/in/ayush-yadav-pro/",
+        target: "_blank",
+        rel: "noopener noreferrer",
+      },
+      {
+        icon: <Instagram size={20} />,
+        label: "Instagram",
+        href: "https://www.instagram.com/flowstra.ai",
+        target: "_blank",
+        rel: "noopener noreferrer",
+      }
+    ];
 
   return (
     <footer className="bg-[rgba(5,5,10,0.4)] relative h-fit rounded-[32px] overflow-hidden m-6 border border-[var(--card-border)]">
@@ -92,6 +108,20 @@ export function Footer() {
               Founder-led AI systems that automate lead qualification, routing,
               and CRM logic around how your team actually operates.
             </p>
+            <div className="flex gap-5 pt-2 pointer-events-auto">
+              {socialLinks.map(({ icon, label, href, target, rel }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target={target}
+                  rel={rel}
+                  className="text-white/60 hover:text-[var(--accent-blue)] transition-colors inline-block"
+                >
+                  {icon}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Footer link sections */}
@@ -162,16 +192,12 @@ export function Footer() {
         {/* Footer bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center text-xs space-y-4 md:space-y-0 text-[var(--text-muted)] font-medium tracking-wide pointer-events-auto mt-auto pt-8">
           <div className="flex space-x-8">
-            {socialLinks.map(({ icon, label, href }) => (
-              <a
-                key={label}
-                href={href}
-                aria-label={label}
-                className="hover:text-[#3b82f6] transition-colors"
-              >
-                {icon}
-              </a>
-            ))}
+            <a href="#" className="hover:text-white transition-colors block py-2">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-white transition-colors block py-2">
+              Terms of Service
+            </a>
           </div>
 
           <p className="text-center md:text-left pointer-events-auto">

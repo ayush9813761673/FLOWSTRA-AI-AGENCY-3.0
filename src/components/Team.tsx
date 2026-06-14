@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { fadeUp, stagger } from "../constants";
+import { Instagram, Linkedin } from "lucide-react";
 import {
   CardHoverReveal,
   CardHoverRevealMain,
@@ -19,13 +20,16 @@ const team = [
     image: "/AYUSH YADAV.png",
     name: "Ayush Yadav",
     role: "Founder & CEO",
-    bio: "5+ years in AI & automation strategy",
+    bio: "5+ years architecting AI solutions and automation strategies for enterprise growth.",
+    instagram: "https://www.instagram.com/ayush.yadav.ai/",
+    linkedin: "https://www.linkedin.com/in/ayush-yadav-pro/",
   },
   {
-    image: "/Karan Sharma.png",
-    name: "Karan Sharma",
-    role: "Lead Specialist",
-    bio: "5+ years experience building scalable AI systems and workflows",
+    image: "/Lavish Sharma.jpeg",
+    name: "Lavish Sharma",
+    role: "COO & Email Specialist",
+    bio: "5+ years orchestrating scalable operations and high-converting outreach systems.",
+    instagram: "https://www.instagram.com/lavish_sh30/",
   },
 ];
 
@@ -77,7 +81,7 @@ export function Team() {
                         className="inline-block size-full max-h-full max-w-full object-cover align-middle object-top"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-                      <div className="absolute bottom-6 left-6 right-6">
+                      <div className="absolute bottom-6 left-6 right-6 pointer-events-auto">
                         <h3 className="text-3xl font-bold text-white drop-shadow-md">
                           {member.name}
                         </h3>
@@ -87,13 +91,39 @@ export function Team() {
                       </div>
                     </CardHoverRevealMain>
 
-                    <CardHoverRevealContent className="space-y-4 rounded-2xl bg-zinc-900/95 text-zinc-50 border border-white/10 w-[calc(100%-3rem)] p-8">
-                      <h3 className="text-3xl font-bold text-white">
-                        {member.name}
-                      </h3>
-                      <p className="text-lg font-medium text-[var(--accent-blue)] mt-1">
-                        {member.role}
-                      </p>
+                    <CardHoverRevealContent className="space-y-4 rounded-2xl bg-zinc-900/95 text-zinc-50 border border-white/10 w-[calc(100%-3rem)] p-8 pointer-events-auto">
+                      <div>
+                        <h3 className="text-3xl font-bold text-white">
+                          {member.name}
+                        </h3>
+                        <div className="flex items-center gap-3 mt-1">
+                          <p className="text-lg font-medium text-[var(--accent-blue)]">
+                            {member.role}
+                          </p>
+                          {member.instagram && (
+                            <a
+                              href={member.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white/60 hover:text-[var(--accent-blue)] transition-colors pointer-events-auto cursor-pointer relative z-50 inline-block"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Instagram className="w-5 h-5" />
+                            </a>
+                          )}
+                          {member.linkedin && (
+                            <a
+                              href={member.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white/60 hover:text-[var(--accent-blue)] transition-colors pointer-events-auto cursor-pointer relative z-50 inline-block"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Linkedin className="w-5 h-5" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
                       <p className="text-base text-white/80 leading-relaxed pt-2">
                         {member.bio}
                       </p>

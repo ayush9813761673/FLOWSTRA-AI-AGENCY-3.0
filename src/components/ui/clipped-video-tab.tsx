@@ -340,7 +340,7 @@ export function ClippedVideoTab() {
                     />
                     <span
                       className={`
-                        text-[12px] md:text-[15px] font-medium transition-colors duration-300 whitespace-nowrap
+                        text-[11px] sm:text-[12px] md:text-[15px] font-medium transition-colors duration-300 leading-tight
                         ${
                           activeTab === index
                             ? "text-[var(--accent-blue)]"
