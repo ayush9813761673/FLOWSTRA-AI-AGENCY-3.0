@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { motion } from "motion/react";
 import { fadeUp, stagger } from "../constants";
 import { GlowCard } from "./ui/spotlight-card";
-import { GeometricBlurMesh } from "./ui/geometric-blur-mesh";
+import { WebGLShader } from "./ui/web-gl-shader";
 
 export function Calculator() {
+
   const [leads, setLeads] = useState<number>(200);
   const [dealValue, setDealValue] = useState<number>(5000);
   const [closeRate, setCloseRate] = useState<number>(8); // percentage
@@ -28,14 +29,15 @@ export function Calculator() {
   };
 
   return (
-    <section id="calculator" className="py-24 px-6 max-w-7xl mx-auto">
-      <motion.div
-        variants={stagger}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        className="flex flex-col gap-16"
-      >
+    <section id="calculator" className="relative py-24 px-6 overflow-hidden border-y border-[var(--card-border)] bg-[#030612]/30 mt-16 pb-32">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="flex flex-col gap-16"
+        >
         <div className="flex flex-col gap-4 max-w-3xl items-center text-center mx-auto">
           <motion.p
             variants={fadeUp}
@@ -61,11 +63,12 @@ export function Calculator() {
         <motion.div variants={fadeUp}>
           <GlowCard
             customSize
-            className="w-full flex flex-col rounded-2xl overflow-hidden border border-[var(--card-border)] bg-[var(--surface)]"
+            className="w-full flex flex-col rounded-2xl overflow-hidden border border-[var(--card-border)] relative z-0 bg-[#030612]/50 backdrop-blur-md"
           >
-            <div className="flex flex-col lg:flex-row w-full">
+            <WebGLShader />
+            <div className="flex flex-col lg:flex-row w-full relative z-10 bg-transparent">
               {/* Input Section */}
-              <div className="w-full lg:w-1/2 p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-[var(--card-border)]">
+              <div className="w-full lg:w-1/2 p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-[var(--card-border)] bg-black/40 backdrop-blur-sm">
                 <h3 className="text-2xl font-semibold text-[var(--text-primary)] mb-8">
                   Your Current Numbers
                 </h3>
@@ -87,7 +90,7 @@ export function Calculator() {
                       step="10"
                       value={leads}
                       onChange={(e) => setLeads(Number(e.target.value))}
-                      className="w-full h-2 bg-[var(--card-border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent-blue)]"
+                      className="w-full h-2 bg-[var(--card-border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent-blue)] relative z-50 pointer-events-auto"
                     />
                   </div>
 
@@ -107,7 +110,7 @@ export function Calculator() {
                       step="100"
                       value={dealValue}
                       onChange={(e) => setDealValue(Number(e.target.value))}
-                      className="w-full h-2 bg-[var(--card-border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent-blue)]"
+                      className="w-full h-2 bg-[var(--card-border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent-blue)] relative z-50 pointer-events-auto"
                     />
                   </div>
 
@@ -127,19 +130,14 @@ export function Calculator() {
                       step="1"
                       value={closeRate}
                       onChange={(e) => setCloseRate(Number(e.target.value))}
-                      className="w-full h-2 bg-[var(--card-border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent-blue)]"
+                      className="w-full h-2 bg-[var(--card-border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent-blue)] relative z-50 pointer-events-auto"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Results Section */}
-              <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center bg-black/60 relative overflow-hidden z-0">
-                {/* Geometric Interactive Mesh Behind Content */}
-                <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen overflow-hidden">
-                  <GeometricBlurMesh />
-                </div>
-                
+              <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center bg-black/40 backdrop-blur-sm relative overflow-hidden z-0">
                 <div className="absolute -top-24 -right-24 w-48 h-48 bg-[var(--accent-blue)] rounded-full blur-[100px] opacity-10 pointer-events-none z-0"></div>
 
                 <div className="flex flex-col gap-8 relative z-10 pointer-events-none">
@@ -184,7 +182,7 @@ export function Calculator() {
                 href="https://cal.com/flowstra/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative z-10 inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black bg-white rounded-full shadow-[0_0_30px_8px_rgba(255,255,255,0.5)] hover:shadow-[0_0_35px_12px_rgba(255,255,255,0.6)] hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1"
+                className="relative z-50 inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black bg-white rounded-full shadow-[0_0_30px_8px_rgba(255,255,255,0.5)] hover:shadow-[0_0_35px_12px_rgba(255,255,255,0.6)] hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 pointer-events-auto cursor-pointer"
               >
                 Stop the Bleeding — Book Free Audit
               </a>
@@ -195,6 +193,7 @@ export function Calculator() {
           </GlowCard>
         </motion.div>
       </motion.div>
+      </div>
     </section>
   );
 }

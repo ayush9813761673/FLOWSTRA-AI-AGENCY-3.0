@@ -17,6 +17,8 @@ import {
   Mic,
 } from "lucide-react";
 
+import GigabitBackground from "./gigabit";
+
 const items = [
   {
     icon: Zap,
@@ -212,86 +214,25 @@ export function ClippedVideoTab() {
       </div>
 
       {/* IMAGE AREA */}
-      <div className="w-full relative">
-        {/* FLOATING TABS */}
-        <div className="absolute left-2 bottom-16 z-20 max-md:bottom-4 max-md:left-4">
-          <div className="bg-[var(--surface)]/90 backdrop-blur-md rounded-[28px] shadow-xl border border-[var(--card-border)] p-3 w-[240px] max-md:w-[200px]">
-            <div className="flex flex-col gap-2">
-              {items.map((tab, index) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={index}
-                    onClick={() => setActiveTab(index)}
-                    className={`
-                      group flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-300 border
-                      ${
-                        activeTab === index
-                          ? "bg-[var(--accent-blue-dim)] border-[var(--accent-blue)]"
-                          : "border-transparent"
-                      }
-                    `}
-                  >
-                    <Icon
-                      className={`
-                        w-5 h-5 transition-colors duration-300
-                        ${
-                          activeTab === index
-                            ? "text-[var(--accent-blue)]"
-                            : "text-[var(--text-primary)] group-hover:text-[var(--accent-blue)]"
-                        }
-                      `}
-                    />
-
-                    <span
-                      className={`
-                        text-[15px] font-medium transition-colors duration-300
-                        ${
-                          activeTab === index
-                            ? "text-[var(--accent-blue)]"
-                            : "text-[var(--text-primary)] group-hover:text-[var(--accent-blue)]"
-                        }
-                      `}
-                    >
-                      {tab.label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
+      <div className="w-full relative flex flex-col md:block">
+        
         {/* VIDEO CONTAINER */}
         <div
-          className="relative overflow-hidden h-[690px] max-md:h-[500px]"
+          className="relative overflow-hidden h-[550px] md:h-[690px] order-1 md:order-none"
           style={{
             clipPath:
               "polygon(0 0, 92% 0, 100% 12%, 100% 100%, 30% 100%, 22% 88%, 0 88%)",
             borderRadius: "34px",
           }}
         >
-          {/* VIDEO */}
-          <AnimatePresence mode="wait">
-            <motion.video
-              key={activeItem.video}
-              src={activeItem.video}
-              autoPlay
-              muted
-              loop
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.45 }}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </AnimatePresence>
+          {/* BACKGROUND */}
+          <GigabitBackground />
 
           {/* OVERLAY */}
-          <div className="absolute inset-0 bg-black/10" />
+          <div className="absolute inset-0 bg-black/40 md:bg-black/20 z-0" />
 
           {/* CENTER CARD */}
-          <div className="absolute inset-0 flex items-center justify-center max-md:items-start max-md:pt-10">
+          <div className="absolute inset-0 flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeItem.card.heading}
@@ -329,7 +270,7 @@ export function ClippedVideoTab() {
                           <CheckCircle2 className="w-4 h-4 text-blue-600" />
                         )}
                         {task.status === "progress" && (
-                          <LoaderCircle className="w-4 h-4 text-blue-600" />
+                          <LoaderCircle className="w-4 h-4 text-blue-600 animate-spin" />
                         )}
                         {task.status === "pending" && (
                           <Circle className="w-4 h-4 text-[#bdbdbd]" />
@@ -360,11 +301,59 @@ export function ClippedVideoTab() {
 
                 {/* FOOTER */}
                 <div className="flex items-center justify-between mt-5 text-[11px] text-[#888]">
-                  <span>2/5 tasks complete</span>
+                  <span>{activeItem.card.tasks.filter((t) => t.status === "completed").length}/{activeItem.card.tasks.length} tasks complete</span>
                   <span>Est. 45s remaining</span>
                 </div>
               </motion.div>
             </AnimatePresence>
+          </div>
+        </div>
+
+        {/* FLOATING TABS (Now stacked below on mobile, floating on desktop) */}
+        <div className="relative md:absolute pt-6 md:pt-0 left-0 md:left-2 bottom-0 md:bottom-16 z-20 order-2 md:order-none">
+          <div className="bg-[var(--surface)]/90 backdrop-blur-md rounded-[28px] shadow-xl border border-[var(--card-border)] p-3 w-full md:w-[240px]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-1 gap-2">
+              {items.map((tab, index) => {
+                const Icon = tab.icon;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => setActiveTab(index)}
+                    className={`
+                      group flex items-center justify-center md:justify-start gap-2 md:gap-3 px-2 md:px-4 py-3 rounded-xl text-center md:text-left transition-all duration-300 border
+                      ${
+                        activeTab === index
+                          ? "bg-[var(--accent-blue-dim)] border-[var(--accent-blue)]"
+                          : "border-transparent"
+                      }
+                    `}
+                  >
+                    <Icon
+                      className={`
+                        w-4 h-4 md:w-5 md:h-5 transition-colors duration-300 shrink-0
+                        ${
+                          activeTab === index
+                            ? "text-[var(--accent-blue)]"
+                            : "text-[var(--text-primary)] group-hover:text-[var(--accent-blue)]"
+                        }
+                      `}
+                    />
+                    <span
+                      className={`
+                        text-[12px] md:text-[15px] font-medium transition-colors duration-300 whitespace-nowrap
+                        ${
+                          activeTab === index
+                            ? "text-[var(--accent-blue)]"
+                            : "text-[var(--text-primary)] group-hover:text-[var(--accent-blue)]"
+                        }
+                      `}
+                    >
+                      {tab.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

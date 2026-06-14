@@ -102,6 +102,7 @@ export function GlowingShadow({
           z-index: 2;
           border-radius: var(--card-radius);
           cursor: default;
+          pointer-events: auto;
         }
 
         .glow-container:before,
@@ -112,6 +113,7 @@ export function GlowingShadow({
           width: 100%;
           height: 100%;
           border-radius: var(--card-radius);
+          pointer-events: none;
         }
 
         .glow-content {
@@ -122,6 +124,7 @@ export function GlowingShadow({
           flex-direction: column;
           background: var(--surface, hsl(260deg 100% 3%));
           border-radius: calc(var(--card-radius) * 0.9);
+          pointer-events: auto;
         }
 
         .glow-content:before {
@@ -136,6 +139,7 @@ export function GlowingShadow({
           box-shadow: 0 0 20px black;
           mix-blend-mode: color-burn;
           z-index: -1;
+          pointer-events: none;
           background: hsl(0deg 0% 16%) radial-gradient(
             30% 30% at calc(var(--bg-x) * 1%) calc(var(--bg-y) * 1%),
             hsl(200 100% 90%) calc(0% * var(--bg-size)),
@@ -160,6 +164,7 @@ export function GlowingShadow({
           transform: rotateZ(calc(var(--rotate) * var(--glow-rotate-unit)));
           transform-origin: center;
           border-radius: calc(var(--glow-radius) * 10vw);
+          pointer-events: none;
         }
 
         .glow:after {
