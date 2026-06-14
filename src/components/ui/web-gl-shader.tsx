@@ -62,7 +62,7 @@ export function WebGLShader() {
     const initScene = () => {
       refs.scene = new THREE.Scene()
       refs.renderer = new THREE.WebGLRenderer({ canvas })
-      refs.renderer.setPixelRatio(window.devicePixelRatio)
+      refs.renderer.setPixelRatio(1)
       refs.renderer.setClearColor(new THREE.Color(0x000000))
 
       refs.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, -1)
@@ -101,12 +101,21 @@ export function WebGLShader() {
       handleResize()
     }
 
+    let isInView = true;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isInView = entry.isIntersecting;
+      });
+    }, { threshold: 0 });
+    observer.observe(canvasRef.current);
+
     const animate = () => {
+      refs.animationId = requestAnimationFrame(animate)
+      if (!isInView) return;
       if (refs.uniforms) refs.uniforms.time.value += 0.01
       if (refs.renderer && refs.scene && refs.camera) {
         refs.renderer.render(refs.scene, refs.camera)
       }
-      refs.animationId = requestAnimationFrame(animate)
     }
 
     const handleResize = () => {
@@ -127,6 +136,7 @@ export function WebGLShader() {
     window.addEventListener("resize", handleResize)
 
     return () => {
+      observer.disconnect()
       clearTimeout(timeoutId)
       if (refs.animationId) cancelAnimationFrame(refs.animationId)
       window.removeEventListener("resize", handleResize)

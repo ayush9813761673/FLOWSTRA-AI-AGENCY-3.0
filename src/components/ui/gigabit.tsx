@@ -24,7 +24,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
   vec3 p = vec3(0.0), v = vec3(0.0);
   float z = 0.0, d = 1.0;
 
-  for (float i = 0.0; i < 80.0; i++)
+  for (float i = 0.0; i < 45.0; i++)
   {
     // ray
     p = z * normalize(FC.rgb * 2.0 - r.xyy);
@@ -102,6 +102,23 @@ export function ShaderCanvas({
   const frameRef = useRef<number>(0);
   const mouseRef = useRef({ x: 0, y: 0, l: 0, r: 0 });
 
+  const [isInView, setIsInView] = React.useState(true);
+  const isInViewRef = useRef(true);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isInViewRef.current = entry.isIntersecting;
+        });
+      },
+      { threshold: 0 }
+    );
+    observer.observe(canvasRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const canvas = canvasRef.current!;
     const gl = canvas.getContext("webgl2", { premultipliedAlpha: false });
@@ -131,8 +148,7 @@ export function ShaderCanvas({
     const uMouse = gl.getUniformLocation(program, "iMouse");
 
     const getDpr = () => {
-      const sys = (window.devicePixelRatio || 1);
-      return Math.max(1, Math.min(2, pixelRatio ?? sys));
+      return 1; // force DPR of 1 for performance
     };
 
     let resizeScheduled = false;
@@ -184,6 +200,11 @@ export function ShaderCanvas({
     function tick(now: number) {
       if (disposed) return;
       if (gl.isContextLost()) { rafRef.current = requestAnimationFrame(tick); return; }
+
+      if (!isInViewRef.current) {
+         rafRef.current = requestAnimationFrame(tick);
+         return;
+      }
 
       const t = (now - startRef.current) / 1000;
       frameRef.current += 1;
