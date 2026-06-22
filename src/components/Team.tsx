@@ -19,15 +19,22 @@ const team = [
   {
     image: "/AYUSH YADAV.png",
     name: "Ayush Yadav",
-    role: "Founder & CEO",
+    role: "Co-Founder & CEO",
     bio: "5+ years architecting AI solutions and automation strategies for enterprise growth.",
     instagram: "https://www.instagram.com/ayush.yadav.ai/",
     linkedin: "https://www.linkedin.com/in/ayush-yadav-pro/",
   },
   {
+    image: "/Piyush Yadav.png",
+    name: "Piyush Yadav",
+    role: "Co-Founder & COO",
+    bio: "5+ years streamlining business operations, scaling execution frameworks, and driving sustainable client growth.",
+    instagram: "https://www.instagram.com/piyush.yadav.ai/",
+  },
+  {
     image: "/Lavish Sharma.jpeg",
     name: "Lavish Sharma",
-    role: "COO & Email Specialist",
+    role: "Outreach & Email Specialist",
     bio: "5+ years orchestrating scalable operations and high-converting outreach systems.",
     instagram: "https://www.instagram.com/lavish_sh30/",
   },
@@ -79,6 +86,7 @@ export function Team() {
                         src={member.image}
                         alt={member.name}
                         className="inline-block size-full max-h-full max-w-full object-cover align-middle object-top"
+                        referrerPolicy="no-referrer"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                       <div className="absolute bottom-6 left-6 right-6 pointer-events-auto">
