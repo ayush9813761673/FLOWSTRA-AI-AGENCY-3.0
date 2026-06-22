@@ -19,7 +19,7 @@ const team = [
   {
     image: "/AYUSH YADAV.png",
     name: "Ayush Yadav",
-    role: "Co-Founder & CEO",
+    role: "Founder & CEO",
     bio: "5+ years architecting AI solutions and automation strategies for enterprise growth.",
     instagram: "https://www.instagram.com/ayush.yadav.ai/",
     linkedin: "https://www.linkedin.com/in/ayush-yadav-pro/",
@@ -27,7 +27,7 @@ const team = [
   {
     image: "/Piyush Yadav.png",
     name: "Piyush Yadav",
-    role: "Co-Founder & COO",
+    role: "COO",
     bio: "5+ years streamlining business operations, scaling execution frameworks, and driving sustainable client growth.",
     instagram: "https://www.instagram.com/piyush.yadav.ai/",
   },
